@@ -7,7 +7,7 @@ EASY_LEVEL = {
     'parameters': [
         parameter('reqWord', '단어'),
         parameter('time', '시간'),
-        parameter('number', '번호')
+        parameter('number', '번호', 'json', 'int')
     ],
     'responses': {
         '200': {
