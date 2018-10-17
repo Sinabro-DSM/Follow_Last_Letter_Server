@@ -25548,7 +25548,6 @@ def find_hard(letter):
 @swag_from(EASY_LEVEL)
 @app.route('/easy', methods=['POST'])
 def easy():
-    print("DEBUG TEST")
     reqWord = request.json['reqWord']
     time = request.json['time']
     number = request.json['number']
