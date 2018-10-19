@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import random
+import time
 
 from flasgger import Swagger, swag_from
 from flask import Flask, Response, request, jsonify
@@ -25517,13 +25518,13 @@ def find_easy(letter):
     쉬운 난이도 단어 받아오기
     :return:
     """
-    cnt = 0
+    st = time.time()
     word = random.choice(filter_easy())
 
     while word[0] != letter:
-        cnt += 1
+        et = time.time()
         word = random.choice(filter_easy())
-        if cnt > 50:
+        if int(et - st) > 9:
             word = 'Cannot find word'
             print(word)
             return word
@@ -25536,13 +25537,13 @@ def find_hard(letter):
     어려운 난이도 단어 받아오기
     :return:
     """
-    cnt = 0
+    st = time.time()
     word = random.choice(filter_hard())
 
     while word[0] != letter:
-        cnt += 1
+        et = time.time()
         word = random.choice(filter_hard())
-        if cnt > 50:
+        if int(et - st) > 9:
             word = 'Cannot find word'
             print(word)
             return word
