@@ -11,7 +11,13 @@ EASY_LEVEL = {
     ],
     'responses': {
         '200': {
-            'description': '다음 단어 보냄'
+            'description': '다음 단어 보냄',
+            'examples': {
+                '': [
+                    True,
+                    '단어'
+                ]
+            }
         },
         '406': {
             'description': '올바르지 않은 단어'

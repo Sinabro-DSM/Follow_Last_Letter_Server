@@ -25499,8 +25499,8 @@ def filter_hard():
     return hard_list
 
 
-def cal(length, time, number):
-    score[number] = length * 10 + time * 5
+# def cal(length, time, number):
+#     score[number] = length * 10 + time * 5
 
 
 def start():
@@ -25549,21 +25549,21 @@ def find_hard(letter):
 @app.route('/easy', methods=['POST'])
 def easy():
     reqWord = request.json['reqWord']
-    time = request.json['time']
-    number = request.json['number']
+    # time = request.json['time']
+    # number = request.json['number']
 
     check = verify(reqWord)
 
     if check:
         letter = reqWord[-1]
         wordList.append(reqWord)
-        length = len(reqWord)
-        cal(length, time, number)
+        # length = len(reqWord)
+        # cal(length, time, number)
 
-        return jsonify(find_easy(letter)), 200
+        return jsonify(check, find_easy(letter)), 200
 
     else:
-        score[number] -= 10
+        # score[number] -= 10
         return Response('', 406)
 
 
@@ -25581,21 +25581,21 @@ def easyStart():
 @app.route('/hard', methods=['POST'])
 def hard():
     reqWord = request.json['reqWord']
-    time = request.json['time']
-    number = request.json['number']
+    # time = request.json['time']
+    # number = request.json['number']
 
     check = verify(reqWord)
 
     if check:
         letter = reqWord[-1]
-        length = len(reqWord)
+        # length = len(reqWord)
         wordList.append(reqWord)
-        cal(length, time, number)
+        # cal(length, time, number)
 
-        return jsonify(find_hard(letter)), 200
+        return jsonify(verify, find_hard(letter)), 200
 
     else:
-        score[number] -= 10
+        # score[number] -= 10
         return Response('', 406)
 
 
@@ -25603,7 +25603,7 @@ def hard():
 @app.route('/hard/start')
 def hardStart():
     start()
-    firstWord = random.choice(harList)
+    firstWord = random.choice(hardList)
     wordList.append(firstWord)
 
     return jsonify(firstWord), 200
