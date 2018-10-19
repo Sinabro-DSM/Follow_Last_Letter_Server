@@ -21,6 +21,11 @@ EASY_LEVEL = {
         },
         '406': {
             'description': '올바르지 않은 단어'
+        },
+        'examples': {
+            '': [
+                False
+            ]
         }
     }
 }
@@ -31,6 +36,12 @@ EASY_START = {
     'responses': {
         '200': {
             'description': '첫 단어 보냄'
+        },
+        'examples': {
+            '': [
+                True,
+                '단어'
+            ]
         }
     }
 }
@@ -47,8 +58,19 @@ HARD_LEVEL = {
         '200': {
             'description': '다음 단어 보냄'
         },
+        'examples': {
+            '': [
+                True,
+                '단어'
+            ]
+        },
         '406': {
             'description': '올바르지 않은 단어'
+        },
+        'examples': {
+            '': [
+                False
+            ]
         }
     }
 }
@@ -59,6 +81,12 @@ HARD_START = {
     'responses': {
         '200': {
             'description': '첫 단어 보냄'
+        },
+        'examples': {
+            '': [
+                True,
+                '단어'
+            ]
         }
     }
 }
