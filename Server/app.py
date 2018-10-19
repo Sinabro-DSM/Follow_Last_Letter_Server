@@ -25479,6 +25479,60 @@ words = [
 ]
 
 
+def dueum(word):
+    if word[-1] == '녀':
+        return word.replace('녀', '여')
+
+    if word[-1] == '뇨':
+        return word.replace('뇨', '요')
+
+    if word[-1] == '뉴':
+        return word.replace('뉴', '유')
+
+    if word[-1] == '니':
+        return word.replace('니', '이')
+
+    if word[-1] == '랴':
+        return word.replace('랴', '야')
+
+    if word[-1] == '려':
+        return word.replace('려', '여')
+
+    if word[-1] == '례':
+        return word.replace('례', '예')
+
+    if word[-1] == '료':
+        return word.replace('료', '요')
+
+    if word[-1] == '류':
+        return word.replace('류', '유')
+
+    if word[-1] == '리':
+        return word.replace('리', '이')
+
+    if word[-1] == '령':
+        return word.replace('령', '영')
+
+    if word[-1] == '렬':
+        return word.replace('렬', '열')
+
+    if word[-1] == '률':
+        return word.replace('률', '율')
+
+    if word[-1] == '림':
+        return word.replace('림', '임')
+
+    if word[-1] == '로':
+        return word.replace('로', '노')
+
+    if word[-1] == '념':
+        return word.replace('념', '염')
+
+    if word[-1] == '력':
+        return word.replace('력', '역')
+
+    return word
+
 def filter_easy():
     for i in range(len(words)):
         if (len(str(words[i]))) == 1 or len(str(words[i])) > 4:
@@ -25555,12 +25609,12 @@ def find_hard(letter):
 @app.route('/easy', methods=['POST'])
 def easy():
     reqWord = request.json['reqWord']
+    re_reqWord = dueum(reqWord)
 
-    print(wordList)
     check = verify(reqWord)
 
     if check:
-        letter = reqWord[-1]
+        letter = re_reqWord[-1]
         wordList.append(reqWord)
         resWord = find_easy(letter)
         if resWord == 'Cannot find word':
@@ -25590,11 +25644,12 @@ def easyStart():
 @app.route('/hard', methods=['POST'])
 def hard():
     reqWord = request.json['reqWord']
+    re_reqWord = dueum(reqWord)
 
     check = verify(reqWord)
 
     if check:
-        letter = reqWord[-1]
+        letter = re_reqWord[-1]
         wordList.append(reqWord)
         resWord = find_hard(letter)
         if resWord == 'Cannot find word':
