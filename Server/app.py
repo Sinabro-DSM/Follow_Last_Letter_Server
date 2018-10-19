@@ -25514,6 +25514,11 @@ def verify(word):
     :param word:
     :return:
     """
+    if wordList[-1][-1] != word[0]:
+        return False
+    else:
+        return True
+
     if word in wordList:
         return False
     else:
@@ -25559,12 +25564,16 @@ def easy():
         wordList.append(reqWord)
         # length = len(reqWord)
         # cal(length, time, number)
+        resWord = find_easy(letter)
+        wordList.append(resWord)
 
-        return jsonify(check, find_easy(letter)), 200
-
+        print(wordList)
+        return jsonify(check, resWord), 200
     else:
         # score[number] -= 10
-        return Response('', 406)
+
+        print(wordList)
+        return jsonify(check), 406
 
 
 @swag_from(EASY_START)
@@ -25591,12 +25600,14 @@ def hard():
         # length = len(reqWord)
         wordList.append(reqWord)
         # cal(length, time, number)
+        resWord = find_hard(letter)
+        wordList.append(resWord)
 
-        return jsonify(verify, find_hard(letter)), 200
+        return jsonify(verify, resWord), 200
 
     else:
         # score[number] -= 10
-        return Response('', 406)
+        return jsonify(check), 406
 
 
 @swag_from(HARD_START)
