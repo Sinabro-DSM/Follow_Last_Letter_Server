@@ -16,7 +16,7 @@ easyList = ['기차', '차표', '표범', '범인', '인간', '간호사', '사�
 hardList = ['일상생활', '사농공상', '종합상가', '강강술래', '안전운전', '안전제일']
 
 wordList = []
-score = []
+# score = []
 words = [
 "가감",
 "가감산",
@@ -25491,18 +25491,13 @@ def filter_easy():
 
 def filter_hard():
     for i in range(len(words)):
-        if len(str(words[i])) < 4:
+        if len(str(words[i])) < 3:
             words[i] = ''
 
     hard_list = list(set(words))
     hard_list.remove('')
 
     return hard_list
-
-
-def start():
-    wordList = []
-    score = []
 
 
 def verify(word):
@@ -25522,9 +25517,16 @@ def find_easy(letter):
     쉬운 난이도 단어 받아오기
     :return:
     """
+    cnt = 0
     word = random.choice(filter_easy())
+
     while word[0] != letter:
+        cnt += 1
         word = random.choice(filter_easy())
+        if cnt > 50:
+            word = 'Cannot find word'
+            print(word)
+            return word
     print(word)
     return word
 
@@ -25534,10 +25536,16 @@ def find_hard(letter):
     어려운 난이도 단어 받아오기
     :return:
     """
+    cnt = 0
     word = random.choice(filter_hard())
 
     while word[0] != letter:
+        cnt += 1
         word = random.choice(filter_hard())
+        if cnt > 50:
+            word = 'Cannot find word'
+            print(word)
+            return word
     print(word)
     return word
 
@@ -25547,11 +25555,16 @@ def find_hard(letter):
 def easy():
     reqWord = request.json['reqWord']
 
+    print(wordList)
     check = verify(reqWord)
 
     if check:
         letter = reqWord[-1]
+        wordList.append(reqWord)
         resWord = find_easy(letter)
+        if resWord == 'Cannot find word':
+            return 'Cannot find word', 204
+
         wordList.append(resWord)
 
         print(wordList)
@@ -25564,10 +25577,11 @@ def easy():
 @swag_from(EASY_START)
 @app.route('/easy/start')
 def easyStart():
-    start()
+    del wordList[:]
     firstWord = random.choice(easyList)
     wordList.append(firstWord)
 
+    print(wordList)
     return jsonify(firstWord), 200
 
 
@@ -25582,6 +25596,9 @@ def hard():
         letter = reqWord[-1]
         wordList.append(reqWord)
         resWord = find_hard(letter)
+        if resWord == 'Cannot find word':
+            return 'Cannot find word', 204
+
         wordList.append(resWord)
 
         return jsonify(check, resWord), 200
@@ -25593,7 +25610,7 @@ def hard():
 @swag_from(HARD_START)
 @app.route('/hard/start')
 def hardStart():
-    start()
+    del wordList[:]
     firstWord = random.choice(hardList)
     wordList.append(firstWord)
 
