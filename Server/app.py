@@ -25561,7 +25561,7 @@ def verify(word):
     :param word:
     :return:
     """
-    if wordList[-1][-1] != word[0] or word in wordList:
+    if wordList[-1][-1] != word[0] or word in wordList or word not in words:
         return False
     else:
         return True
