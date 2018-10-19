@@ -4,6 +4,7 @@ import random
 
 from flasgger import Swagger, swag_from
 from flask import Flask, Response, request, jsonify
+from flask_cors import CORS
 
 from config import Config
 from docs.game import EASY_LEVEL, EASY_START, HARD_LEVEL, HARD_START
@@ -12,7 +13,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 easyList = ['기차', '차표', '표범', '범인', '인간', '간호사', '사다리', '리본', '본드']
-hardList = ['제주도', '묵사발', '밭농사', '수채화', '산업화', '조랑말', '이어폰', '남해안', '강강술래', '안전운전', '안전제일']
+hardList = ['일상생활', '사농공상', '종합상가', '강강술래', '안전운전', '안전제일']
 
 wordList = []
 score = []
@@ -25499,10 +25500,6 @@ def filter_hard():
     return hard_list
 
 
-# def cal(length, time, number):
-#     score[number] = length * 10 + time * 5
-
-
 def start():
     wordList = []
     score = []
@@ -25514,12 +25511,7 @@ def verify(word):
     :param word:
     :return:
     """
-    if wordList[-1][-1] != word[0]:
-        return False
-    else:
-        return True
-
-    if word in wordList:
+    if wordList[-1][-1] != word[0] or word in wordList:
         return False
     else:
         return True
@@ -25554,24 +25546,17 @@ def find_hard(letter):
 @app.route('/easy', methods=['POST'])
 def easy():
     reqWord = request.json['reqWord']
-    # time = request.json['time']
-    # number = request.json['number']
 
     check = verify(reqWord)
 
     if check:
         letter = reqWord[-1]
-        wordList.append(reqWord)
-        # length = len(reqWord)
-        # cal(length, time, number)
         resWord = find_easy(letter)
         wordList.append(resWord)
 
         print(wordList)
         return jsonify(check, resWord), 200
     else:
-        # score[number] -= 10
-
         print(wordList)
         return jsonify(check), 406
 
@@ -25590,23 +25575,18 @@ def easyStart():
 @app.route('/hard', methods=['POST'])
 def hard():
     reqWord = request.json['reqWord']
-    # time = request.json['time']
-    # number = request.json['number']
 
     check = verify(reqWord)
 
     if check:
         letter = reqWord[-1]
-        # length = len(reqWord)
         wordList.append(reqWord)
-        # cal(length, time, number)
         resWord = find_hard(letter)
         wordList.append(resWord)
 
-        return jsonify(verify, resWord), 200
+        return jsonify(check, resWord), 200
 
     else:
-        # score[number] -= 10
         return jsonify(check), 406
 
 
@@ -25621,5 +25601,6 @@ def hardStart():
 
 
 if __name__ == '__main__':
+    CORS(app)
     Swagger(app, template=app.config['SWAGGER_TEMPLATE'])
     app.run('0.0.0.0', port=5000, debug=False)
