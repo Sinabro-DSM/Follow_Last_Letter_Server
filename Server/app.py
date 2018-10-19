@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 easyList = ['기차', '차표', '표범', '범인', '인간', '간호사', '사다리', '리본', '본드']
-hardList = ['일상생활', '사농공상', '종합상가', '강강술래', '안전운전', '안전제일']
+hardList = ['강아지', '망아지', '송아지', '소화기', '연예인', '가이드']
 
 wordList = []
 # score = []
